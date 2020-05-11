@@ -1,38 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { comments } from '../models/comments.model';
-import { from } from 'rxjs';
-
+import { HttpClient } from '@angular/common/http'
+import { async } from '@angular/core/testing'
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
 
-  private gitHubUrl = 'https://jsonplaceholder.typicode.com/comments/';
+  private jsonPlaceHolder = 'https://jsonplaceholder.typicode.com/comments';
+  constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient,
-    private comment: comments) { }
-
-  async getComments() {
-    const retorno = await this.http.get(this.gitHubUrl).toPromise();
-    console.log(retorno);
-    return retorno;
+  async Get() {
+    let resposta = await this.http.get(this.jsonPlaceHolder).toPromise;
+    return resposta;
   }
 
-  async getCommentsById(id: number) {
-    const retorno = await this.http.get(this.gitHubUrl + id).toPromise();
-    console.log(retorno);
-    return retorno;
+  async getById(id) {
+    let resposta = await this.http.get(this.jsonPlaceHolder + id).toPromise();
+    return resposta;
   }
 
-  async postCommentsById(comment) {
-    const retorno = await this.http.post(this.gitHubUrl, comment).toPromise();
-    console.log(retorno);
-    return retorno;
+  async Post(object) {
+    let resposta = await this.http.post(this.jsonPlaceHolder, object, { observe: 'response' }).toPromise();
+    return resposta;
   }
-
-
 }
-
